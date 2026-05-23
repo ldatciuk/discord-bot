@@ -5,6 +5,19 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
+os.environ["PYTHONWARNINGS"] = (
+    "ignore:Your version of PyNaCl is incompatible:UserWarning"
+)
+
+
+# Имитируем отсутствие voice_client
+class VoiceClient:
+    def __init__(self, *args, **kwargs):
+        raise NotImplementedError("Voice not supported on this platform")
+
+
+discord.VoiceClient = VoiceClient
+
 load_dotenv()  # Загружает .env
 # === НАСТРОЙКИ ===
 # Рекомендуется использовать .env файл для токена в продакшене
